@@ -14,7 +14,13 @@ cd "$(dirname "$0")"
 # Initialize npm and install dependencies
 echo "Initializing npm and installing dependencies..."
 npm init -y
-npm install express axios
+npm install express axios dotenv
+
+# Create .env file
+echo "Creating .env file..."
+cat <<EOL > .env
+STEAM_API_KEY=YOUR_STEAM_API_KEY
+EOL
 
 # Create server.js file
 echo "Creating server.js file..."
@@ -22,10 +28,11 @@ cat <<EOL > server.js
 const express = require('express');
 const axios = require('axios');
 const path = require('path');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const STEAM_API_KEY = 'YOUR_STEAM_API_KEY'; // Replace with your Steam API key
+const STEAM_API_KEY = process.env.STEAM_API_KEY;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
