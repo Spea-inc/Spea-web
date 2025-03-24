@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spea Catalog</title>
+</head>
+<body>
+    <h1>Spea Catalog</h1>
+    <ul id="game-list"></ul>
+
+    <script>
+        async function fetchGames() {
+            try {
+                const response = await fetch('/api/games');
+                const games = await response.json();
+                const gameList = document.getElementById('game-list');
+                games.forEach(game => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = game.name;
+                    gameList.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error('Failed to fetch games:', error);
+            }
+        }
+
+        fetchGames();
+    </script>
+</body>
+</html>
